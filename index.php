@@ -14,9 +14,9 @@
 
 </head>
 
-<?php include 'PHP/nav.php'; ?>
-
 <body>
+	<?php include 'PHP/nav.php'; ?>
+
 	<div id=search_container>
 		<div id=search_form>
 			<form id="google_search" action="https://google.com/search" method="get">
