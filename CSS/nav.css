@@ -1,0 +1,28 @@
+
+@font-face {
+	font-family: 'helvetica light';
+	src: url(/fonts/Helvetica/HelveticaLTStd-Light.otf);
+}
+
+nav {
+	background-color: #2f3640;
+	text-align: center;
+	color: white;
+	padding: 10px;
+	font-family: 'helvetica light', Arial, Helvetica, san-serif;
+}
+
+nav a {
+	text-decoration: none;
+	padding:10px 20px 10px 20px;
+	color: white;
+}
+
+nav a:visited {
+	color: white;
+}
+
+nav a:hover {
+	background-color: white;
+	color: #2f3640;
+}

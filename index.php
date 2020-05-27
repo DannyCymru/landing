@@ -5,6 +5,7 @@
 
   <link rel="stylesheet" href="CSS/main.css">
   <link rel="stylesheet" href="CSS/search.css">
+  <link rel="stylesheet" href="CSS/nav.css">
 
   <!-- Inline CSS to simply incorporate PHP to change the background image-->
   <style type="text/css">
@@ -13,9 +14,9 @@
 
 </head>
 
-<body>
-	<p> This is the beginning </p>
+<?php include 'PHP/nav.php'; ?>
 
+<body>
 	<div id=search_container>
 		<div id=search_form>
 			<form id="google_search" action="https://google.com/search" method="get">
@@ -26,6 +27,5 @@
 
 		<div id = trans_box> </div>
 	</div>
-
 </body>
 </html>
