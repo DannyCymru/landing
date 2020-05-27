@@ -1,0 +1,24 @@
+/*
+Container for all search elements
+Have to distinguish between this and the transparent box
+otherwise the whole thing is completely transparent
+*/
+#search_container{
+	width: 500px;
+	height: 70px;
+	text-align: center;
+	display: inline-block;
+}
+
+
+#trans_box{
+	height: 100%;
+	width:  100%;
+	background-color: white;
+	opacity: 0.2;
+}
+
+#search_form {
+	position: relative;
+	top:75%;
+}
