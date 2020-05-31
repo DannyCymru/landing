@@ -8,17 +8,29 @@ otherwise the whole thing is completely transparent
 	height: 70px;
 	text-align: center;
 	display: inline-block;
+
+	position: fixed;
+    top: 45%;
+    left: 40%;
+    margin-top: -50px;
+    margin-left: -100px;
 }
 
 
 #trans_box{
 	height: 100%;
 	width:  100%;
-	background-color: white;
-	opacity: 0.2;
+	background-color: #2f3640;
+	opacity: 0.3;
+	z-index: 1;
 }
 
 #search_form {
 	position: relative;
 	top:75%;
+	z-index: 3;
+
+	padding-top: 5px;
+	padding-bottom: 5px;
+    margin:0px;
 }

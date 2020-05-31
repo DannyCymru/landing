@@ -20,12 +20,12 @@
 	<div id=search_container>
 		<div id=search_form>
 			<form id="google_search" action="https://google.com/search" method="get">
-				<input id="search_bar" type="text" name="q" placeholder="Search Box">
-				<input id="enter_button" type="submit" value="Enter">
+				<input id="search_bar" type="text" name="q" placeholder="www.reddit.com">
+				<input id="enter_button" type="submit" value="SEARCH">
 			</form>	
 		</div>
 
-		<div id = trans_box> </div>
+		<!-- <div id = trans_box> </div> -->
 	</div>
 </body>
 </html>
