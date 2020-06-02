@@ -16,14 +16,14 @@ otherwise the whole thing is completely transparent
     margin-left: -100px;
 }
 
-
+/*
 #trans_box{
 	height: 100%;
 	width:  100%;
 	background-color: #2f3640;
 	opacity: 0.3;
 	z-index: 1;
-}
+}*/
 
 #search_form {
 	position: relative;

@@ -6,10 +6,11 @@
   <link rel="stylesheet" href="CSS/main.css">
   <link rel="stylesheet" href="CSS/search.css">
   <link rel="stylesheet" href="CSS/nav.css">
-
+  
   <!-- Inline CSS to simply incorporate PHP to change the background image-->
   <style type="text/css">
   	html {height:100%;background-image: url(<?php include 'PHP/rando_image.php';?>); background-position: center; background-size: 100% 100%;background-repeat: no-repeat;}
+  	nav {background-color:unset;}
   </style>
 
 </head>
@@ -25,7 +26,9 @@
 			</form>	
 		</div>
 
-		<!-- <div id = trans_box> </div> -->
+		<!--Transparent box I created for a search bar. Commenting it out till I am sure I don't want to use it in
+		some way 
+			<div id = trans_box> </div> -->
 	</div>
 </body>
 </html>
