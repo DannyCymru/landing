@@ -5,15 +5,10 @@ otherwise the whole thing is completely transparent
 */
 #search_container{
 	width: 500px;
-	height: 70px;
+	height: 42px;
 	text-align: center;
-	display: inline-block;
-
-	position: fixed;
-    top: 45%;
-    left: 40%;
-    margin-top: -50px;
-    margin-left: -100px;
+	overflow: hidden;
+	margin-top:300px;
 }
 
 /*
@@ -25,12 +20,50 @@ otherwise the whole thing is completely transparent
 	z-index: 1;
 }*/
 
-#search_form {
-	position: relative;
-	top:75%;
-	z-index: 3;
+/* Search input */
+#search_bar {
 
-	padding-top: 5px;
-	padding-bottom: 5px;
-    margin:0px;
+	font-size: 16px;
+	color: #2f3640;
+	border-width: 0;
+	background-color:white;
+}
+
+
+input[type = "text"] {
+
+	width: 95%;
+	padding: 11px 0px 8px 1em;
+	color: #333;
+	outline: none;
+}
+
+/*CSS for the enter button */
+#enter_button {
+
+	position: absolute;
+	height: 42px;
+	width: 80px;
+	font-size: 16px;
+	color: #2f3640;
+	text-align: center;
+	line-height: 42px;
+	border-width: 0;
+	margin-bottom: 2px;
+	padding-right: 10px;
+
+	-webkit-border-radius: 0px 0px 0px 0px;
+	-moz-border-radius: 0px 0px 0px 0px;
+	border-radius: 0px 0px 0px 0px;
+}
+
+#enter_button:hover {
+	background-color: white;
+	color: #2f3640;
+}
+
+
+input:focus,select:focus,textarea:focus,button:focus {
+	
+	outline: none;
 }
