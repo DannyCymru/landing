@@ -4,11 +4,18 @@ Have to distinguish between this and the transparent box
 otherwise the whole thing is completely transparent
 */
 #search_container{
-	width: 500px;
+	width: 700px;
 	height: 42px;
 	text-align: center;
 	overflow: hidden;
-	margin-top:300px;
+
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	
+	margin: auto;
 }
 
 /*
@@ -32,7 +39,7 @@ otherwise the whole thing is completely transparent
 
 input[type = "text"] {
 
-	width: 95%;
+	width: 60%;
 	padding: 11px 0px 8px 1em;
 	color: #333;
 	outline: none;
