@@ -1,3 +1,8 @@
+body{
+	padding:0px;
+	margin:0px;
+}
+
 /*
 Container for all search elements
 Have to distinguish between this and the transparent box
@@ -73,4 +78,17 @@ input[type = "text"] {
 input:focus,select:focus,textarea:focus,button:focus {
 	
 	outline: none;
+}
+
+#brgr_links{
+	overflow: hidden;
+	position: relative;
+	display: none;
+}
+
+#brgr_links .icon {
+	position: absolute;
+	color:black;
+	display: block;
+	padding: 10px;
 }
