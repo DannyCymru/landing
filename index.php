@@ -35,17 +35,23 @@
 </head>
 
 <body>
-	<?php include 'PHP/nav.php';?>
+	<?php
+    //Nav bar 
+    include 'PHP/nav.php';
+  ?>      
 
-	<div id = "brgr_links">
-		<a href="#">Next image</a>
-		<a href="#">Remove image</a>
-	</div>
-	
-	<a href="javascript:void(0);" class="icon" onclick="brgr()">
-    	<i class="fa fa-bars"></i>
-  	</a>
+  <!--Burger menu links -->
+  <div id="brgr_container">
+    <a href="javascript:void(0);" class="icon" onclick="brgr()">
+        <i class="fa fa-bars"></i>
+    </a>
 
+    <div id = "brgr_links">
+	   	<a href="#">Next image</a>
+      <br>
+		  <a href="#">Remove image</a>
+    </div>
+  </div>
 
 
 	<div id=search_container>

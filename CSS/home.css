@@ -34,7 +34,6 @@ otherwise the whole thing is completely transparent
 
 /* Search input */
 #search_bar {
-
 	font-size: 16px;
 	color: #2f3640;
 	border-width: 0;
@@ -43,7 +42,6 @@ otherwise the whole thing is completely transparent
 
 
 input[type = "text"] {
-
 	width: 60%;
 	padding: 11px 0px 8px 1em;
 	color: #333;
@@ -52,7 +50,6 @@ input[type = "text"] {
 
 /*CSS for the enter button */
 #enter_button {
-
 	position: absolute;
 	height: 42px;
 	width: 80px;
@@ -74,10 +71,22 @@ input[type = "text"] {
 	color: #2f3640;
 }
 
-
 input:focus,select:focus,textarea:focus,button:focus {
-	
 	outline: none;
+}
+
+/*Styling for burger style drop down list*/
+#brgr_container{
+	position: absolute;
+	top:1%;
+	left: 80%;
+	right:0;
+	margin:auto;
+
+	text-align: center;
+	width:130px;
+	height:10px;
+	display: block;
 }
 
 #brgr_links{
@@ -86,9 +95,15 @@ input:focus,select:focus,textarea:focus,button:focus {
 	display: none;
 }
 
-#brgr_links .icon {
-	position: absolute;
-	color:black;
-	display: block;
+.icon {
+	color:white;
 	padding: 10px;
+}
+
+#brgr_links a:link,
+#brgr_links a:visited,
+#brgr_links a:hover,
+#brgr_links a:active{
+	text-decoration: none;
+	color:white;
 }
