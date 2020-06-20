@@ -1,27 +1,19 @@
-<!doctype html>
+<!doctype html st>
 
 <head>
   <title>Landed!</title>
 
   <link rel="stylesheet" href="CSS/home.css">
   <link rel="stylesheet" href="CSS/nav.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- Inline CSS to simply incorporate PHP to change the background image-->
   <style type="text/css">
-  	html {height:100%;background-image: url(<?php include 'PHP/rando_image.php';?>); background-position: center; background-size: 100% 100%;background-repeat: no-repeat;}
+  	html {height:100%;background-image: url(<?php include 'PHP/wallpaper.php'; rando_image();?>); background-position: center; background-size: 100% 100%;background-repeat: no-repeat;}
   	nav {background-color:unset;}
   </style>
-
   <script type="text/javascript">
-  	/*$.ajax({ url: 'PHP/rm_wallpaper.php',
-               data: {"myData": element},
-               type: 'POST',
-               success: function(data){
-                      ;  
-               }
-      })*/
-
     function brgr(){
     	var x = document.getElementById("brgr_links");
     	if (x.style.display === "block"){
@@ -30,6 +22,18 @@
     		x.style.display = "block";
     	}
     }
+
+    function rm_paper(){
+      var wallpaper = $("html").css("background-image");
+      $.ajax({ url: 'PHP/wallpaper.php',
+               type: 'POST',
+               data: {"id": 'rm', "paper": wallpaper},
+               success: function(data){  
+                  console.log(data);
+               }
+      })
+    }
+
   </script>
 
 </head>
@@ -49,7 +53,7 @@
     <div id = "brgr_links">
 	   	<a href="#">Next image</a>
       <br>
-		  <a href="#">Remove image</a>
+		  <a href="#" onclick="rm_paper()">Remove image</a>
     </div>
   </div>
 
