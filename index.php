@@ -14,6 +14,8 @@
   	nav {background-color:unset;}
   </style>
   <script type="text/javascript">
+
+    //Changes the styling so that we have an effective burger menu drop down.
     function brgr(){
     	var x = document.getElementById("brgr_links");
     	if (x.style.display === "block"){
@@ -23,15 +25,23 @@
     	}
     }
 
+    //Ajax request that sends the id and current wall paper to a php function
+    //that deletes it then reloads the page to show a new image.
     function rm_paper(){
       var wallpaper = $("html").css("background-image");
       $.ajax({ url: 'PHP/wallpaper.php',
                type: 'POST',
                data: {"id": 'rm', "paper": wallpaper},
                success: function(data){  
-                  console.log(data);
+                  location.reload();
                }
       })
+    }
+
+    //Reloads page to get a new wallpaper, 
+    //if I just happen to want to see a different one but not delete.
+    function next_paper(){
+      location.reload();
     }
 
   </script>
@@ -51,7 +61,7 @@
     </a>
 
     <div id = "brgr_links">
-	   	<a href="#">Next image</a>
+	   	<a href="#" onclick="next_paper()">Next image</a>
       <br>
 		  <a href="#" onclick="rm_paper()">Remove image</a>
     </div>
