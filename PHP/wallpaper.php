@@ -7,7 +7,7 @@
 		$dir = $_SERVER['DOCUMENT_ROOT'] . '/landing/wallpapers/';
 
 		//creates a glob array of all images in the folder	
-		$images = glob($dir . '*{.jpg,png,jpeg}', GLOB_BRACE);
+		$images = glob($dir . '*{.jpg,png,jpeg,webp}', GLOB_BRACE);
 
 		//Uses a array randomisation function to then randomly order the glob array
 		$image = array_rand($images);
