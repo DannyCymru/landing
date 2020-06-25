@@ -1,3 +1,9 @@
-wallpapers/*
-videos/*
-gifs/*
+wallpapers/*.png
+wallpapers/*.jpg
+wallpapers/*.jpeg
+videos/*.mkv
+videos/*.mp4
+comics/*.png
+comics/*.jpeg
+comics/*.jpg
+gifs/*.gif
