@@ -14,7 +14,7 @@
 
   		$filename = basename($filename);
 
-    	echo "<option value='" . 'https://' . $_SERVER['SERVER_NAME'] . '/comics/' . $filename . "'>".$filename."</option> \n";
+    	echo "<option value=' https://" . $_SERVER['SERVER_NAME'] . '/comics/' . $filename . "'>".$filename."</option> \n";
 
     	}
 
@@ -22,43 +22,55 @@
 
     //Dropdown function for different volumes
 	function vol_dropdown(){
+            
+            //Grabs the current directory where the php function was called from
+            $cwd = getcwd();
+            
+            //Gets the current volume directory
+            $this_dir = basename($cwd);
 
-		$chapter = basename(dirname(__FILE__));
+            //Removes the current volume from the CWD string so that we can get list all volumes of this series
+            $rm_cv = str_replace($this_dir, "", $cwd);            
 
-		$chapterTrim = rtrim(__DIR__, $chapter);
+            foreach (glob($rm_cv . "*", GLOB_ONLYDIR) as $filename) {
+                //Removes the unix path variables
+                $sans_prefix = substr($filename, 9);
 
-		$webAddress = 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+                echo "<option value= https://www." . $sans_prefix . ">" . "</option> \n";
+            }
+    }
 
-		$chapterAddress = substr($webAddress, 0, -23);
+    function page_dropdown() {
 
-		foreach(glob( $chapterTrim . '/*') as $filename){
+        //Grabs the current directory where the php function was called from
+        $cwd = getcwd();
 
-    		$filename = basename($filename);
+        //For loop to go through every found file at the current working directory. 
+        foreach (glob($cwd . "/*") as $filename) {
+            //Removes the unix path variables
+            $sans_prefix = substr($filename, 9);
 
-        	echo "<option value='" . $chapterAddress . $filename . "'>".$filename. "</option> \n";
-
+            echo "<option value= https://www." . $sans_prefix . ">" . "</option> \n";
         }
 
     }
 
-    function comic_list() {
+    function comic_list(){
+            //This glob gets all the subdirectories in the directory
+            foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
 
-			//This glob gets all the subdirectories in the directory
-			foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
+            //strips prefix from the original $filename variable, which was only a temporary container
+            $filename = basename($filename);
 
-    		//strips prefix from the original $filename variable, which was only a temporary container
-    		$filename = basename($filename);
+            //replaces any use of underscores with spaces, this allows for a more neatly organised echo
+            $comic = preg_replace("(_)", " ", $filename);
 
-    		//replaces any use of underscores with spaces, this allows for a more neatly organised echo
-    		$comic = preg_replace("(_)", " ", $filename);
+            //This makes the beginning of every word uppercase, this allows for a neat list
+            $upperCase = ucwords($comic);
 
-    		//This makes the beginning of every word uppercase, this allows for a neat list
-    		$upperCase = ucwords($comic);
+            echo "<div class= 'manga_listing'>" . "<a href='" . 'https://www.erebus.systems/landing/comics/' . $filename . "/'>" . "<img src='../sources/images/temp.png' >". "<br>" . $upperCase . "</a>"  . "</div>";
 
-    		echo "<div class= 'manga_listing'>" . "<a href='" . 'https://www.erebus.systems/landing/comics/' . $filename . "/'>" . "<img src='../sources/images/temp.png' >". "<br>" . $upperCase . "</a>"  . "</div>";
-
-    	}
-
+        }
     }
 
 
