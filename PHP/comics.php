@@ -46,7 +46,7 @@
         $cwd = getcwd();
 
         //For loop to go through every found file at the current working directory. 
-        foreach (glob($cwd . "/*") as $filename) {
+        foreach (glob($cwd . "/*{.webp, jpg, png}", GLOB_BRACE) as $filename) {
             //Removes the unix path variables
             $sans_prefix = substr($filename, 9);
 
