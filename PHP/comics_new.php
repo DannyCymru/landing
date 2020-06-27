@@ -6,7 +6,7 @@
 
 	Basically what the php script does is, for each file in the directory (The variable, $filename is blank, just acts as a sort of container to be filled with the actual file names) then it prints the inputted html with the filename that the php script filled into the container variable.
 
-	basename($filename) acts as a way to strip any prefix or extra data from the $filename's. */	
+	basename($filename) acts as a way to strip any prefix or extra data from the $filename's. 	
 
    function comics_dropdown(){ 
 
@@ -55,6 +55,8 @@
 
     }
 
+   
+*/
     function comic_list(){
             //This glob gets all the subdirectories in the directory
             foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
@@ -68,10 +70,22 @@
             //This makes the beginning of every word uppercase, this allows for a neat list
             $upperCase = ucwords($comic);
 
-            echo "<div class= 'manga_listing'>" . "<a href='" . 'https://www.erebus.systems/landing/comics/' . $filename . "/'>" . "<img src='../sources/images/temp.png' >". "<br>" . $upperCase . "</a>"  . "</div>";
-
+            echo "<div class= 'comic_dir'>" . "<a href='" . 'https://www.erebus.cymru/landing/comics/' . $filename . "/'>" . "<img src='../sources/images/temp.png' >". "<br>" . $upperCase . "</a>"  . "</div>\r\n";
         }
     }
 
+  function iC(){
+
+    ob_start();
+
+    $dir_im = imagecreatefromwebp("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
+    $scaled = imagescale($dir_im, 400);
+    imagejpeg($scaled);
+
+    $raw_image = ob_get_clean();
+
+    echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
+
+  } 
 
 ?>
