@@ -6,6 +6,7 @@
 		</title>
 		<link rel="stylesheet" href="../CSS/nav.css">
 		<link rel="stylesheet" href="../CSS/main.css">
+		<link rel="stylesheet" href="../CSS/mangaReader.css">
 	</head>
 	<body>
 	
@@ -13,13 +14,13 @@
     	//Nav bar 
     	include '../PHP/nav.php';
   	?>      
+  	<center id= "comic_container">
+  		<?php
+  			include '../PHP/comics_new.php';
 
-  	<?php
-  	include '../PHP/comics_new.php';
-
-  	comic_list();
-  	iC();
-  	?>
+  			comic_list();
+  		?>
+  	</center>
 
 	</body>
 </html>

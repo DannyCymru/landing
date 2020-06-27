@@ -10,7 +10,7 @@
 
    function comics_dropdown(){ 
 
-   		foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
+   		foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/comics/*' , GLOB_ONLYDIR) as $filename){
 
   		$filename = basename($filename);
 
@@ -59,7 +59,7 @@
 */
     function comic_list(){
             //This glob gets all the subdirectories in the directory
-            foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
+            foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/comics/*' , GLOB_ONLYDIR) as $filename){
 
             //strips prefix from the original $filename variable, which was only a temporary container
             $filename = basename($filename);
@@ -70,7 +70,9 @@
             //This makes the beginning of every word uppercase, this allows for a neat list
             $upperCase = ucwords($comic);
 
-            echo "<div class= 'comic_dir'>" . "<a href='" . 'https://www.erebus.cymru/landing/comics/' . $filename . "/'>" . "<img src='../sources/images/temp.png' >". "<br>" . $upperCase . "</a>"  . "</div>\r\n";
+            echo "<div class='comic'>" . "<a href='" . 'https://www.erebus.cymru/landing/comics/' . $filename . "/'>";
+            echo iC();
+            echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
         }
     }
 
@@ -78,13 +80,30 @@
 
     ob_start();
 
+    //Loads WebP image from directory
     $dir_im = imagecreatefromwebp("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
-    $scaled = imagescale($dir_im, 400);
+
+    //Gets the size of the image
+    $image_size = getimagesize("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
+
+    //Crops the image at the center
+    $cropped = imagecrop($dir_im, ['x' => 1000,
+                                    'y' =>0, 
+                                    'width' => (536*3), 
+                                    'height' => (829*2)]);
+    
+    //Scales the imgage to an appropriate size to use as a thumbnail
+    $scaled = imagescale($cropped, 250);
+    
+    //Creates a jpeg image from provided resource
     imagejpeg($scaled);
 
+    //Gets the raw code for the image, cleans it for viewing
     $raw_image = ob_get_clean();
 
+    //Echo's the image file using base64 encoding of the raw image data
     echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
+    echo $image_size[0] . " " . $image_size[1];
 
   } 
 

@@ -12,3 +12,18 @@
 #pageOption{
 	width: 100px;
 }
+
+
+#comic_container{
+	display: block;
+}
+
+.comic{
+	display: inline-block;
+	max-width: 20%;
+  	margin-top: 2.5%;
+}
+
+.comic img{
+	margin-right: 10%;
+}
