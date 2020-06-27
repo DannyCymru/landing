@@ -18,7 +18,7 @@
   		<?php
   			include '../PHP/comics_new.php';
 
-  			comic_list();
+  			Comics::comic_list();
   		?>
   	</center>
 

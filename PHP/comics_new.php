@@ -2,10 +2,6 @@
 
 	/*
 
-	This php script very simply fills the drop down with all the options in the selected directory.
-
-	Basically what the php script does is, for each file in the directory (The variable, $filename is blank, just acts as a sort of container to be filled with the actual file names) then it prints the inputted html with the filename that the php script filled into the container variable.
-
 	basename($filename) acts as a way to strip any prefix or extra data from the $filename's. 	
 
    function comics_dropdown(){ 
@@ -57,54 +53,61 @@
 
    
 */
-    function comic_list(){
-            //This glob gets all the subdirectories in the directory
-            foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/comics/*' , GLOB_ONLYDIR) as $filename){
+  class Comics {
 
-            //strips prefix from the original $filename variable, which was only a temporary container
+
+
+  	function __construct() {
+
+  	}
+
+    function comic_list(){
+        //This glob gets all the subdirectories in the directory
+        foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/comics/*' , GLOB_ONLYDIR) as $filename){
+
+            //strips prefix from the original $filename variable
             $filename = basename($filename);
 
-            //replaces any use of underscores with spaces, this allows for a more neatly organised echo
+                //replaces any use of underscores with spaces
             $comic = preg_replace("(_)", " ", $filename);
 
-            //This makes the beginning of every word uppercase, this allows for a neat list
             $upperCase = ucwords($comic);
 
-            echo "<div class='comic'>" . "<a href='" . 'https://www.erebus.cymru/landing/comics/' . $filename . "/'>";
-            echo iC();
+            echo "<div class='comic'>" . "<a href='" . $_SERVER['SERVER_NAME'] . '/comics/' . $filename . "/'>";
+            echo Comics::iC();
             echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
         }
     }
 
-  function iC(){
+    //Basic image creation function with GD
+    function iC(){
 
-    ob_start();
+    	ob_start();
 
-    //Loads WebP image from directory
-    $dir_im = imagecreatefromwebp("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
+        //Loads WebP image from directory
+        $dir_im = imagecreatefromwebp("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
 
-    //Gets the size of the image
-    $image_size = getimagesize("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
+        //Gets the size of the image
+        $image_size = getimagesize("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
 
-    //Crops the image at the center
-    $cropped = imagecrop($dir_im, ['x' => 1000,
-                                    'y' =>0, 
-                                    'width' => (536*3), 
-                                    'height' => (829*2)]);
-    
-    //Scales the imgage to an appropriate size to use as a thumbnail
-    $scaled = imagescale($cropped, 250);
-    
-    //Creates a jpeg image from provided resource
-    imagejpeg($scaled);
+        //Crops the image
+        $cropped = imagecrop($dir_im, ['x' => 1000,
+                                      'y' =>0, 
+                                      'width' => (536*3), 
+                                      'height' => (829*2)]);
+        
+        //Scales the imgage to an appropriate size to use as a thumbnail
+        $scaled = imagescale($cropped, 250);
+        
+        //Creates a jpeg image from provided resource
+        imagejpeg($scaled);
 
-    //Gets the raw code for the image, cleans it for viewing
-    $raw_image = ob_get_clean();
+        //Gets the raw code for the image, cleans it for viewing
+        $raw_image = ob_get_clean();
 
-    //Echo's the image file using base64 encoding of the raw image data
-    echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
-    echo $image_size[0] . " " . $image_size[1];
-
-  } 
+        //Echo's the image file using base64 encoding of the raw image data
+        echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
+      }
+}
 
 ?>
