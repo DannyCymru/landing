@@ -68,15 +68,19 @@
             //strips prefix from the original $filename variable
             $filename = basename($filename);
 
-                //replaces any use of underscores with spaces
+            //replaces any use of underscores with spaces
             $comic = preg_replace("(_)", " ", $filename);
 
             $upperCase = ucwords($comic);
 
-            echo "<div class='comic'>" . "<a href='" . $_SERVER['SERVER_NAME'] . '/comics/' . $filename . "/'>";
+            echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
             echo Comics::iC();
             echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
         }
+    }
+
+    function first_image(){
+
     }
 
     //Basic image creation function with GD
