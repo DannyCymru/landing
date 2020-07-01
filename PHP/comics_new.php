@@ -62,8 +62,11 @@
   	}
 
     function comic_list(){
+
+    	$cwd = getcwd();
+
         //This glob gets all the subdirectories in the directory
-        foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/comics/*' , GLOB_ONLYDIR) as $filename){
+        foreach(glob($cwd . '/*' , GLOB_ONLYDIR) as $filename){
 
             //strips prefix from the original $filename variable
             $filename = basename($filename);
@@ -76,10 +79,36 @@
             echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
             echo Comics::iC();
             echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
+
+            Comics::first_image($filename);
         }
     }
 
-    function first_image(){
+    function first_image($filename){
+
+    	$filename=array("$filename");
+    	$cwd = getcwd();
+
+    	//For every filename in the array
+    	for ($i=0; $i < sizeOf($filename); $i++) {
+    	    
+    	    $dir = $cwd . '/' . $filename[$i] . "/";
+ 			
+ 			$all_dirs = glob($dir . '*');
+ 			
+ 			//Foreach function to fill the array with all directories for the comic
+ 			//This is so we can grab only the very first volume for each comic
+ 			foreach ($all_dirs as $file) {
+ 				$first_dir[] = $file;
+ 			}
+
+ 			//Recursively scans the very first volume for each comic
+ 			$scanned_dir = array_diff(scandir($first_dir[0]), array('..', '.', 'index.php'));
+
+ 			//Prints the very first image found (array elements 0 and 1 are the '..' files)
+ 			echo $scanned_dir[2];
+    	}
+
 
     }
 
