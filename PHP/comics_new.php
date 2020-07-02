@@ -77,10 +77,8 @@
             $upperCase = ucwords($comic);
 
             echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
-            echo Comics::iC();
+            echo Comics::iC( Comics::first_image($filename));
             echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
-
-            Comics::first_image($filename);
         }
     }
 
@@ -105,23 +103,41 @@
  			//Recursively scans the very first volume for each comic
  			$scanned_dir = array_diff(scandir($first_dir[0]), array('..', '.', 'index.php'));
 
- 			//Prints the very first image found (array elements 0 and 1 are the '..' files)
- 			echo $scanned_dir[2];
+ 			//Returns the full path to the first image found (array elements 0 and 1 of scanned_dir are the '..' files)
+ 			$full_path = $all_dirs[0] . '/' . $scanned_dir[2];
+ 			return $full_path;
     	}
 
 
     }
 
     //Basic image creation function with GD
-    function iC(){
-
+    function iC($image){
+    	$file_info = pathinfo($image);
+    	$dir_im;
     	ob_start();
 
-        //Loads WebP image from directory
-        $dir_im = imagecreatefromwebp("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
+
+    	switch ($file_info['extension']) {
+    		case 'webp':
+    			$dir_im = imagecreatefromwebp($image);
+    			break;
+    		case 'jpg':
+    			$dir_im = imagecreatefromjpeg($image);
+    			break;
+    		case 'jpeg':
+    			$dir_im = imagecreatefromjpeg($image);
+    			break;
+    		case 'png':
+    			$dir_im = imagecreatefrompng($image);
+    			break;
+    		default:
+    			echo "error";
+    			break;
+    	}
 
         //Gets the size of the image
-        $image_size = getimagesize("All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp");
+        $image_size = getimagesize($image);
 
         //Crops the image
         $cropped = imagecrop($dir_im, ['x' => 1000,
