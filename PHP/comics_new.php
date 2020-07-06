@@ -5,21 +5,6 @@
 
   		}
 
-	   function comics_dropdown(){ 
-
-   			//acts as a way to strip any prefix or extra data from the $filename's. 	
-			basename($filename);
-
-   			foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/comics/*' , GLOB_ONLYDIR) as $filename){
-
-  			$filename = basename($filename);
-
-    		echo "<option value=' https://" . $_SERVER['SERVER_NAME'] . '/comics/' . $filename . "'>".$filename."</option> \n";
-
-    		}
-
-		}
-
     	//Dropdown function for different volumes
 		function vol_dropdown(){
             
@@ -34,9 +19,9 @@
 
             	foreach (glob($rm_cv . "*", GLOB_ONLYDIR) as $filename) {
                 	//Removes the unix path variables
-                	$sans_prefix = substr($filename, 9);
+                	$sans_prefix = substr($filename, 29);
 
-                	echo "<option value= https://www." . $sans_prefix . ">" . "</option> \n";
+                	echo "<option value= " . $sans_prefix . ">"  . "</option> \n";
             	}
     	}
 
@@ -45,13 +30,15 @@
   	     	//Grabs the current directory where the php function was called from
     	    $cwd = getcwd();
 
-        	//For loop to go through every found file at the current working directory. 
-        	foreach (glob($cwd . "/*{.webp, jpg, png}", GLOB_BRACE) as $filename) {
-            	//Removes the unix path variables
-            	$sans_prefix = substr($filename, 29);
+         	$filename = glob($cwd . "/*{.webp, jpg, png}", GLOB_BRACE);
 
-            	echo "<option value= " . $sans_prefix . ">" . "</option> \n";
-        	}
+            	for ($i=0; $i < sizeof($filename); $i++) {
+
+                	//Removes the unix path variables
+                	$sans_prefix = substr($filename[$i], 29);
+
+                	echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
+            	}
 
     	}
 
@@ -71,12 +58,12 @@
             $upperCase = ucwords($comic);
 
             echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
-            echo Comics::iC( Comics::first_image($filename));
+            echo Comics::im_cr( Comics::first_im($filename));
             echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
         	}
     	}
 
-    	function first_image($filename){
+    	function first_im($filename){
 
     		$filename=array("$filename");
     		$cwd = getcwd();
@@ -104,7 +91,7 @@
     	}
 
     	//Basic image creation function with GD
-    	function iC($image){
+    	function im_cr($image){
     		$file_info = pathinfo($image);
     		$dir_im;
     		ob_start();
@@ -128,26 +115,43 @@
     				break;
     		}
 
-        	//Gets the size of the image
-        	$image_size = getimagesize($image);
-
-        	//Crops the image
-        	$cropped = imagecrop($dir_im, ['x' => 1000,
-            	                          'y' =>0, 
-                	                      'width' => (536*3), 
-                    	                  'height' => (829*2)]);
-        
-        	//Scales the imgage to an appropriate size to use as a thumbnail
-        	$scaled = imagescale($cropped, 250);
+        	
         
         	//Creates a jpeg image from provided resource
-        	imagejpeg($scaled);
+        	imagejpeg(Comics::im_man($image, $dir_im));
 
         	//Gets the raw code for the image, cleans it for viewing
         	$raw_image = ob_get_clean();
 
         	//Echo's the image file using base64 encoding of the raw image data
         	echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
+    }
+
+    //Function to handle iamge manipulation
+    function im_man($image, $dir_im){
+        //Gets the size of the image
+        $image_size = getimagesize($image);
+
+        //Checks which cropping template to use
+        if ($image_size[0] >= 2050) {
+            $cropped = imagecrop($dir_im, ['x' => ($image_size[1]/2),
+                                            'y' =>0, 
+                                            'width' =>  ($image_size[0] / 3), 
+                                            'height' => ($image_size[1] /1.5)]);
+
+            //Scales the imgage to an appropriate size to use as a thumbnail
+            $scaled = imagescale($cropped, 300);
+        }
+        else{
+            $cropped = imagecrop($dir_im, ['x' => ($image_size[1]/17),
+                                            'y' =>0, 
+                                            'width' =>  (($image_size[0] / 3)*2.5), 
+                                            'height' => ($image_size[1] /2)]);
+
+            //Scales the imgage to an appropriate size to use as a thumbnail
+            $scaled = imagescale($cropped, 280);
+        }
+        return $scaled;   
     }
 }
 ?>
