@@ -4,7 +4,7 @@
 	function rando_image(){
 		/*Dynamic way to get the root on the current server.
 		makes it easier if moving site to different structures*/
-		$dir = $_SERVER['DOCUMENT_ROOT'] . '/landing/wallpapers/';
+		$dir = $_SERVER['DOCUMENT_ROOT'] . '/wallpapers/';
 
 		//creates a glob array of all images in the folder	
 		$images = glob($dir . '*{.jpg,png,jpeg,webp}', GLOB_BRACE);

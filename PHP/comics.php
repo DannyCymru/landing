@@ -1,77 +1,155 @@
 <?php
+	class Comics {
 
-	/*
+  		function __construct() {
 
-	This php script very simply fills the drop down with all the options in the selected directory.
+  		}
 
-	Basically what the php script does is, for each file in the directory (The variable, $filename is blank, just acts as a sort of container to be filled with the actual file names) then it prints the inputted html with the filename that the php script filled into the container variable.
+    	//Dropdown function for different volumes
+		function vol_dropdown(){
+            
+        	    //Grabs the current directory where the php function was called from
+            	$cwd = getcwd();
+            
+           		//Gets the current volume directory
+            	$this_dir = basename($cwd);
 
-	basename($filename) acts as a way to strip any prefix or extra data from the $filename's. */	
+            	//Removes the current volume from the CWD string so that we can get list all volumes of this series
+            	$rm_cv = str_replace($this_dir, "", $cwd);            
 
-   function comics_dropdown(){ 
+            	foreach (glob($rm_cv . "*", GLOB_ONLYDIR) as $filename) {
+                	//Removes the unix path variables
+                	$sans_prefix = substr($filename, 29);
 
-   		foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
+                	echo "<option value= " . $sans_prefix . ">"  . "</option> \n";
+            	}
+    	}
 
-  		$filename = basename($filename);
+    	function page_dropdown() {
 
-    	echo "<option value=' https://" . $_SERVER['SERVER_NAME'] . '/comics/' . $filename . "'>".$filename."</option> \n";
+  	     	//Grabs the current directory where the php function was called from
+    	    $cwd = getcwd();
+
+         	$filename = glob($cwd . "/*{.webp, jpg, jpeg, png}", GLOB_BRACE);
+
+            	for ($i=0; $i < sizeof($filename); $i++) {
+
+                	//Removes the unix path variables
+                	$sans_prefix = substr($filename[$i], 29);
+
+                	echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
+            	}
 
     	}
 
-	}
+    	function comic_list(){
 
-    //Dropdown function for different volumes
-	function vol_dropdown(){
-            
-            //Grabs the current directory where the php function was called from
-            $cwd = getcwd();
-            
-            //Gets the current volume directory
-            $this_dir = basename($cwd);
+    		$cwd = getcwd();
 
-            //Removes the current volume from the CWD string so that we can get list all volumes of this series
-            $rm_cv = str_replace($this_dir, "", $cwd);            
+        	//This glob gets all the subdirectories in the directory
+        	foreach(glob($cwd . '/*' , GLOB_ONLYDIR) as $filename){
 
-            foreach (glob($rm_cv . "*", GLOB_ONLYDIR) as $filename) {
-                //Removes the unix path variables
-                $sans_prefix = substr($filename, 9);
-
-                echo "<option value= https://www." . $sans_prefix . ">" . "</option> \n";
-            }
-    }
-
-    function page_dropdown() {
-
-        //Grabs the current directory where the php function was called from
-        $cwd = getcwd();
-
-        //For loop to go through every found file at the current working directory. 
-        foreach (glob($cwd . "/*") as $filename) {
-            //Removes the unix path variables
-            $sans_prefix = substr($filename, 9);
-
-            echo "<option value= https://www." . $sans_prefix . ">" . "</option> \n";
-        }
-
-    }
-
-    function comic_list(){
-            //This glob gets all the subdirectories in the directory
-            foreach(glob($_SERVER['DOCUMENT_ROOT'] . '/landing/comics/*' , GLOB_ONLYDIR) as $filename){
-
-            //strips prefix from the original $filename variable, which was only a temporary container
+            //strips prefix from the original $filename variable
             $filename = basename($filename);
 
-            //replaces any use of underscores with spaces, this allows for a more neatly organised echo
+            //replaces any use of underscores with spaces
             $comic = preg_replace("(_)", " ", $filename);
 
-            //This makes the beginning of every word uppercase, this allows for a neat list
             $upperCase = ucwords($comic);
 
-            echo "<div class= 'manga_listing'>" . "<a href='" . 'https://www.erebus.systems/landing/comics/' . $filename . "/'>" . "<img src='../sources/images/temp.png' >". "<br>" . $upperCase . "</a>"  . "</div>";
+            echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
+            echo Comics::im_cr(Comics::first_im($filename));
+            echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
+        	}
+    	}
 
+    	function first_im($filename){
+
+    		$filename=array("$filename");
+    		$cwd = getcwd();
+
+    		//For every filename in the array
+    		for ($i=0; $i < sizeOf($filename); $i++) {
+    	    
+    	    	$dir = $cwd . '/' . $filename[$i] . "/";
+ 			
+ 				$all_dirs = glob($dir . '*');
+ 			
+ 				//Foreach function to fill the array with all directories for the comic
+ 				//This is so we can grab only the very first volume for each comic
+ 				foreach ($all_dirs as $file) {
+ 					$first_dir[] = $file;
+ 				}
+
+ 				//Recursively scans the very first volume for each comic and removes unnecessary results
+ 				$scanned_dir = array_diff(scandir($first_dir[0]), array('..', '.', 'index.php'));
+
+ 				//Returns the full path to the first image found (array elements 0 and 1 of scanned_dir are the '..' files)
+ 				$full_path = $all_dirs[0] . '/' . $scanned_dir[2];
+ 				return $full_path;
+    		}
+    	}
+
+    	//Basic image creation function with GD
+    	function im_cr($image){
+    		$file_info = pathinfo($image);
+    		$dir_im;
+    		ob_start();
+
+            //Checks file extension to decide which imagecreate function is required
+    		switch ($file_info['extension']) {
+    			case 'webp':
+    				$dir_im = imagecreatefromwebp($image);
+    				break;
+    			case 'jpg':
+    				$dir_im = imagecreatefromjpeg($image);
+    				break;
+    			case 'jpeg':
+    				$dir_im = imagecreatefromjpeg($image);
+    				break;
+    			case 'png':
+    				$dir_im = imagecreatefrompng($image);
+    				break;
+    			default:
+    				echo "error";
+    				break;
+    		}
+        
+        	//Creates a jpeg image from provided resource
+        	imagejpeg(Comics::im_man($image, $dir_im));
+
+        	//Gets the raw code for the image, cleans it for viewing
+        	$raw_image = ob_get_clean();
+
+        	//Echo's the image file using base64 encoding of the raw image data
+        	echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
+        }
+
+        //Function to handle iamge manipulation
+        function im_man($image, $dir_im){
+            //Gets the size of the image
+            $image_size = getimagesize($image);
+
+            //Checks which cropping template to use
+            if ($image_size[0] >= 2050) {
+                $cropped = imagecrop($dir_im, ['x' => ($image_size[1]/2),
+                                                'y' =>0, 
+                                                'width' =>  ($image_size[0] / 3), 
+                                                'height' => ($image_size[1] /1.5)]);
+
+                //Scales the imgage to an appropriate size to use as a thumbnail
+                $scaled = imagescale($cropped, 300);
+            }
+            else{
+                $cropped = imagecrop($dir_im, ['x' => ($image_size[1]/17),
+                                                'y' =>0, 
+                                                'width' =>  (($image_size[0] / 3)*2.5), 
+                                                'height' => ($image_size[1] /2)]);
+
+                //Scales the imgage to an appropriate size to use as a thumbnail
+                $scaled = imagescale($cropped, 280);
+            }
+        return $scaled;   
         }
     }
-
-
 ?>
