@@ -47,7 +47,7 @@ for root, dirs, files in os.walk(dir_path):
         # OS path splits the name away from the file extension and path variable
         new_folder = os.path.splitext(archive)[0][0:]
 
-        if name.endswith('.zip') or name.endswith('.cbz') or name.endswith('.CBZ'):
+        if name.endswith('.zip') or name.endswith('.cbz') or name.endswith('.CBZ') or name.endswith('.ZIP'):
             extract('zip', archive, root)
             os.remove(archive)
 
