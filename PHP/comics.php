@@ -46,10 +46,13 @@
 
     		$cwd = getcwd();
 
+    		//Glob statement
     		$glob_it = glob($cwd . '/*' , GLOB_ONLYDIR);
 
+    		//Folders to exclude (monster is temporary, it was causing other issues)
     		$exclude = [$cwd . '/Monster', $cwd . '/comic_image'];
 
+    		//removes the folders from the globbed array
     		$remove = array_diff($glob_it, $exclude);
 
         	//This glob gets all the subdirectories in the directory
