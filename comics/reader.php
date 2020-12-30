@@ -14,10 +14,10 @@
 
 		</title>
 
-		<link rel="stylesheet" type="text/css" href="../../../CSS/main.css">
-		<link rel="stylesheet" type="text/css" href="../../../CSS/mangaReader.css">
-		<link rel="stylesheet" type="text/css" href="../../../CSS/nav.css">
-
+		<link rel="stylesheet" type="text/css" href="../../CSS/main.css">
+		<link rel="stylesheet" type="text/css" href="../../CSS/mangaReader.css">
+		<link rel="stylesheet" type="text/css" href="../../CSS/nav.css">
+		
 		<script type="text/javascript">
 			/*
 			javascript function to change the image of the comic through the drop down options
