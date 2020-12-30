@@ -10,6 +10,11 @@
 
 				include '../PHP/comics.php';
 
+				session_start();
+
+				Comics::validate($_GET['comic']);
+
+				print_r($_GET['comic']);
 			?>
 
 		</title>
@@ -129,6 +134,7 @@
 
 			<center>
 
+				<?php ?>
 				<img id= "cPage" src='https://www.erebus.cymru/comics/All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp' onclick="magnify()" >
 
 				<p>You can also use the left and right arrow keys to go back and forth between pages</p>

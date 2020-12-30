@@ -55,7 +55,6 @@
     		//removes the folders from the globbed array
     		$remove = array_diff($glob_it, $exclude);
 
-        	//This glob gets all the subdirectories in the directory
         	foreach($remove as $filename){
 
             	//strips prefix from the original $filename variable
@@ -72,7 +71,7 @@
         		}
 
         		else {
-        			echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
+        			echo "<div class='comic'>" . "<a href='" . 'reader.php?comic=' . $filename . "'>";
         			echo "<img src='../comics/comic_image/" . $filename . ".webp'/>";
             		echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
         		}
@@ -164,6 +163,16 @@
             }
                   	
         	return $scaled;
+        }
+
+       function validate($get) {
+       		$glob_it = glob(getcwd() . '/*' , GLOB_ONLYDIR);
+       		for ($i=0; $i < count($glob_it); $i++) { 
+         		if(isset($get) == basename($glob_it[$i])) {
+					$_SESSION['comic'] = $get;
+					return $_SESSION['comic'];
+       			}
+       		}
         }
     }
 ?>
