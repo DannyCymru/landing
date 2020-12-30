@@ -6,7 +6,8 @@
 		makes it easier if moving site to different structures*/
 		$dir = $_SERVER['DOCUMENT_ROOT'] . '/wallpapers/';
 
-		//creates a glob array of all images in the folder	
+		/*creates a glob array of all images in the folder, just in case we allow for all permutations
+		of popular image formats, however webp should be considered the DEFAULT */
 		$images = glob($dir . '*{.jpg,png,jpeg,webp}', GLOB_BRACE);
 
 		//Uses a array randomisation function to then randomly order the glob array
@@ -33,5 +34,5 @@
 		$full_string = $_SERVER['DOCUMENT_ROOT'] . $important_string;
     	rm_image($full_string);
 	}
-	
+
 ?>
