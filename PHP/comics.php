@@ -58,17 +58,24 @@
         	//This glob gets all the subdirectories in the directory
         	foreach($remove as $filename){
 
-            //strips prefix from the original $filename variable
-            $filename = basename($filename);
+            	//strips prefix from the original $filename variable
+            	$filename = basename($filename);
 
-            //replaces any use of underscores with spaces
-            $comic = preg_replace("(_)", " ", $filename);
+            	//replaces any use of underscores with spaces
+            	$comic = preg_replace("(_)", " ", $filename);
 
-            $upperCase = ucwords($comic);
+            	$upperCase = ucwords($comic);
 
-            echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
-            echo Comics::im_cr(Comics::first_im($filename));
-            echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
+            	//checks if a thumbnail doesn't alaready exist. If it doesn't it runs functions to appropriately create one
+            	if(!file_exists("../comics/comic_image/" . $filename . ".webp")) {
+               		Comics::im_cr($filename, Comics::first_im($filename));
+        		}
+
+        		else {
+        			echo "<div class='comic'>" . "<a href='" . '/comics/' . $filename . "/'>";
+        			echo "<img src='../comics/comic_image/" . $filename . ".webp'/>";
+            		echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
+        		}
         	}
     	}
 
@@ -100,7 +107,7 @@
     	}
 
     	//Basic image creation function with GD
-    	function im_cr($image){
+    	function im_cr($filename, $image){
     		$file_info = pathinfo($image);
     		$dir_im;
     		ob_start();
@@ -123,15 +130,12 @@
     				echo "error";
     				break;
     		}
-        
-        	//Creates a jpeg image from provided resource
-        	imagejpeg(Comics::im_man($image, $dir_im));
+        	
+        	$manipulated=Comics::im_man($image, $dir_im);
 
-        	//Gets the raw code for the image, cleans it for viewing
-        	$raw_image = ob_get_clean();
-
-        	//Echo's the image file using base64 encoding of the raw image data
-        	echo "<img src='data:image/jpeg;base64," . base64_encode($raw_image) . "'/>";
+        	//Creates a webp image from provided resource
+        	imagewebp($manipulated,  "../comics/comic_image/" . $filename .".webp", 100);
+        	imagedestroy($manipulated);
         }
 
         //Function to handle iamge manipulation
@@ -158,13 +162,8 @@
                 //Scales the imgage to an appropriate size to use as a thumbnail
                 $scaled = imagescale($cropped, 280);
             }
-
-
-        return Comics::im_save($scaled);
-        }
-
-       function im_save($image){
-        	 imagewebp($image, '/var/wwww/erebus.cymru/landing/comics/comic_image/' + $image);
+                  	
+        	return $scaled;
         }
     }
 ?>
