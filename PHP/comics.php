@@ -46,8 +46,14 @@
 
     		$cwd = getcwd();
 
+    		$glob_it = glob($cwd . '/*' , GLOB_ONLYDIR);
+
+    		$exclude = [$cwd . '/Monster', $cwd . '/comic_image'];
+
+    		$remove = array_diff($glob_it, $exclude);
+
         	//This glob gets all the subdirectories in the directory
-        	foreach(glob($cwd . '/*' , GLOB_ONLYDIR) as $filename){
+        	foreach($remove as $filename){
 
             //strips prefix from the original $filename variable
             $filename = basename($filename);
@@ -149,7 +155,13 @@
                 //Scales the imgage to an appropriate size to use as a thumbnail
                 $scaled = imagescale($cropped, 280);
             }
-        return $scaled;   
+
+
+        return Comics::im_save($scaled);
+        }
+
+       function im_save($image){
+        	 imagewebp($image, '/var/wwww/erebus.cymru/landing/comics/comic_image/' + $image);
         }
     }
 ?>
