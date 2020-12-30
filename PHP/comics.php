@@ -7,28 +7,22 @@
 
     	//Dropdown function for different volumes
 		function vol_dropdown(){
-            
-        	    //Grabs the current directory where the php function was called from
-            	$cwd = getcwd();
-            
-           		//Gets the current volume directory
-            	$this_dir = basename($cwd);
+                
+                //Sets comic directory with the session info            
+        	    $set_dir = '../comics/' . $_SESSION['comic'];
 
-            	//Removes the current volume from the CWD string so that we can get list all volumes of this series
-            	$rm_cv = str_replace($this_dir, "", $cwd);            
+            	foreach (glob($set_dir . "/*", GLOB_ONLYDIR) as $filename) {
+                	
+                  $volumes = str_replace($set_dir . '/', "", $filename);
 
-            	foreach (glob($rm_cv . "*", GLOB_ONLYDIR) as $filename) {
-                	//Removes the unix path variables
-                	$sans_prefix = substr($filename, 29);
-
-                	echo "<option value= " . $sans_prefix . ">"  . "</option> \n";
+                	echo "<option value= '" . $filename . "'>" . $volumes . "</option> \n";
             	}
     	}
 
     	function page_dropdown() {
 
   	     	//Grabs the current directory where the php function was called from
-    	    $cwd = getcwd();
+            $set_dir = '../comics/' . $_SESSION['comic'] . '/' . $_SESSION['volume'];
 
          	$filename = glob($cwd . "/*{.webp, jpg, jpeg, png}", GLOB_BRACE);
 
@@ -63,7 +57,7 @@
             	//replaces any use of underscores with spaces
             	$comic = preg_replace("(_)", " ", $filename);
 
-            	$upperCase = ucwords($comic);
+            	$upper_case = ucwords($comic);
 
             	//checks if a thumbnail doesn't alaready exist. If it doesn't it runs functions to appropriately create one
             	if(!file_exists("../comics/comic_image/" . $filename . ".webp")) {
@@ -73,7 +67,7 @@
         		else {
         			echo "<div class='comic'>" . "<a href='" . 'reader.php?comic=' . $filename . "'>";
         			echo "<img src='../comics/comic_image/" . $filename . ".webp'/>";
-            		echo "<br>" . $upperCase . "</a>"  . "</div>\r\n";
+            		echo "<br>" . $upper_case . "</a>"  . "</div>\r\n";
         		}
         	}
     	}
@@ -173,6 +167,12 @@
 					return $_SESSION['comic'];
        			}
        		}
+        }
+
+        function volume_get() {
+            if (isset($_GET['volume'])) {
+                return "test";
+            }
         }
     }
 ?>

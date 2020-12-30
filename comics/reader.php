@@ -22,13 +22,22 @@
 		<link rel="stylesheet" type="text/css" href="../../CSS/main.css">
 		<link rel="stylesheet" type="text/css" href="../../CSS/mangaReader.css">
 		<link rel="stylesheet" type="text/css" href="../../CSS/nav.css">
-		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 		<script type="text/javascript">
-			/*
-			javascript function to change the image of the comic through the drop down options
-			Basically the image change is based off the element value of the select option that,
-			is generated for every page in the chapters directory.
-			*/
+			
+			function volumeChange(volume){
+				$.ajax({
+    			    type: "GET",
+        			url: document.URL,
+        			data: "volume=" + volume,
+        			success: function(result) {
+        				var str = "../comics/" + document.title + "/";
+        				console.log(volume.replace(str, ''));
+        			}
+    			});
+			}
+
+			/* Function that changes the image based on the element of the dropdown options */
 
 			function displayImage(elem) {
 
@@ -36,6 +45,7 @@
 				image.src = elem.value;
 			}
 
+			//Creates a modal of the image to allow a magnified view of the comic
 			function magnify() {
 
 				var modal = document.getElementById("iModal");
@@ -102,7 +112,7 @@
 			<div id="comicDropdown"> 
 			<center>
 
-		<select id = "volumeOption" onchange= "location = this.options[this.selectedIndex].value;">
+		<select id = "volumeOption" onchange = "volumeChange(this.value);">
 
 			<option value = "" selected="">Volume/Chapter</option>
 
@@ -135,7 +145,7 @@
 			<center>
 
 				<?php ?>
-				<img id= "cPage" src='https://www.erebus.cymru/comics/All_Rounder_Meguru/All-RounderMeguruv01/All-Rounder_Meguru_V01_000a.webp' onclick="magnify()" >
+				<img id= "cPage" src='' onclick="magnify()" >
 
 				<p>You can also use the left and right arrow keys to go back and forth between pages</p>
 
