@@ -186,7 +186,7 @@
 
                 $sans_prefix = substr($pages[$i], 29);
 
-                echo "<option value= '" . $sans_prefix . "'>" . "Page:" . $i . "</option>\n";
+                echo "<option value= '" . $sans_prefix . "'>" . $i . "</option>\n";
             }
 
         }

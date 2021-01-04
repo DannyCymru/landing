@@ -13,9 +13,9 @@
 		</title>
 
 		<link rel="stylesheet" type="text/css" href="../../CSS/main.css">
-		<link rel="stylesheet" type="text/css" href="../../CSS/mangaReader.css">
+		<link rel="stylesheet" type="text/css" href="../../CSS/reader.css">
 		<link rel="stylesheet" type="text/css" href="../../CSS/nav.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
 		<script type="text/javascript">
 			
 			function volumeChange(volume){
@@ -120,7 +120,6 @@
 				<img id= "cPage" src='' onclick="magnify()" >
 				<p>You can also use the left and right arrow keys to go back and forth between pages</p>
 
-			</center>
 
 			<div id="iModal">
 				<div id="close">
@@ -129,6 +128,9 @@
 				
 				<img id="modalContent">
 			</div>
+
+			</center>
+
 	 	</div>
 	 </div>
 	</body>
