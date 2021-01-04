@@ -16,7 +16,7 @@
   	?>      
   	<center id= "comic_container">
   		<?php
-  			include '../PHP/comics_new.php';
+  			include '../PHP/comics.php';
 
   			Comics::comic_list();
   		?>
