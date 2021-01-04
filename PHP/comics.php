@@ -5,49 +5,22 @@
 
   		}
 
-    	//Dropdown function for different volumes
-		function vol_dropdown(){
-                
-                //Sets comic directory with the session info            
-        	    $set_dir = '../comics/' . $_SESSION['comic'];
-
-            	foreach (glob($set_dir . "/*", GLOB_ONLYDIR) as $filename) {
-                	
-                  $volumes = str_replace($set_dir . '/', "", $filename);
-
-                	echo "<option value= '" . $filename . "'>" . $volumes . "</option> \n";
-            	}
-    	}
-
-    	function page_dropdown() {
-
-  	     	//Grabs the current directory where the php function was called from
-            $set_dir = '../comics/' . $_SESSION['comic'] . '/' . $_SESSION['volume'];
-
-         	$filename = glob($cwd . "/*{.webp, jpg, jpeg, png}", GLOB_BRACE);
-
-            	for ($i=0; $i < sizeof($filename); $i++) {
-
-                	//Removes the unix path variables
-                	$sans_prefix = substr($filename[$i], 29);
-
-                	echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
-            	}
-
-    	}
+        /*I use a lot of basic globs to get basic directory information
+        this function allows me to not repeat myself so much*/
+        function glob_it($cwd) {
+            $glob_in = glob($cwd . '/*' , GLOB_ONLYDIR);
+            return $glob_in;
+        }
 
     	function comic_list(){
 
     		$cwd = getcwd();
-
-    		//Glob statement
-    		$glob_it = glob($cwd . '/*' , GLOB_ONLYDIR);
-
+    		
     		//Folders to exclude (monster is temporary, it was causing other issues)
     		$exclude = [$cwd . '/Monster', $cwd . '/comic_image'];
 
     		//removes the folders from the globbed array
-    		$remove = array_diff($glob_it, $exclude);
+    		$remove = array_diff(Comics::glob_it($cwd), $exclude);
 
         	foreach($remove as $filename){
 
@@ -72,6 +45,7 @@
         	}
     	}
 
+        //Image creation functions
     	function first_im($filename){
 
     		$filename=array("$filename");
@@ -159,20 +133,46 @@
         	return $scaled;
         }
 
+
        function validate($get) {
-       		$glob_it = glob(getcwd() . '/*' , GLOB_ONLYDIR);
-       		for ($i=0; $i < count($glob_it); $i++) { 
-         		if(isset($get) == basename($glob_it[$i])) {
+
+            $glob_in = Comics::glob_it(getcwd());
+
+       		for ($i=0; $i < count($glob_in); $i++) { 
+         		if(isset($get) == basename($glob_in[$i])) {
 					$_SESSION['comic'] = $get;
 					return $_SESSION['comic'];
-       			}
+                }
        		}
         }
 
-        function volume_get() {
-            if (isset($_GET['volume'])) {
-                return "test";
-            }
+
+        //Dropdown function for different volumes
+        function vol_dropdown(){
+                //Sets comic directory with the session info            
+                $set_dir = '../comics/' . $_SESSION['comic'];
+
+                foreach (Comics::glob_it($set_dir) as $filename) {
+                    
+                    $volumes = str_replace($set_dir . '/', "", $filename);
+
+                    echo "<option value= '" . $filename . "'>" . $volumes . "</option> \n";
+                }
+        }
+
+        function page_dropdown(){
+          /*  //Grabs the current directory where the php function was called from
+            $set_dir = '../comics/' . $_SESSION['comic'] . '/' . $_SESSION['volume'];
+
+            $filename = glob($cwd . "/*{.webp, jpg, jpeg, png}", GLOB_BRACE);
+
+            for ($i=0; $i < sizeof($filename); $i++) {
+
+                //Removes the unix path variables
+                $sans_prefix = substr($filename[$i], 29);
+
+                echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
+            }*/
         }
     }
 ?>
