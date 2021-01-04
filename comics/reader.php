@@ -1,22 +1,15 @@
 <!DOCTYPE html>
-
 <html>
-
 	<head>
-
 		<title>
-
 			<?php 
-
 				include '../PHP/comics.php';
-
 				session_start();
 
-				Comics::validate($_GET['comic']);
+				$comic_name = Comics::validate_comic($_GET['comic']);
 
-				print_r($_GET['comic']);
+				print_r($comic_name);
 			?>
-
 		</title>
 
 		<link rel="stylesheet" type="text/css" href="../../CSS/main.css">
@@ -26,19 +19,10 @@
 		<script type="text/javascript">
 			
 			function volumeChange(volume){
-				$.ajax({
-    			    type: "GET",
-        			url: document.URL,
-        			data: "volume=" + volume,
-        			success: function(result) {
-        				var str = "../comics/" + document.title + "/";
-        				console.log(volume.replace(str, ''));
-        			}
-    			});
+
 			}
 
-			/* Function that changes the image based on the element of the dropdown options */
-
+			//Function that changes the image based on the element of the dropdown options 
 			function displayImage(elem) {
 
 				var image = document.getElementById("cPage");
@@ -59,15 +43,13 @@
 				}
 
 				var close = document.getElementById("close");
+
 				close.onclick = function() {
 					modal.style.display = "none";
-
 				}
-
 			}
 
 			//Allows for an arrow click to change the comic page
-
 			window.addEventListener("keydown", function e (event) {
 				switch (event.key) {
 
@@ -81,24 +63,20 @@
 
 					break;
 
-
-
 					//Left Arrow
 					case "ArrowLeft":
 
-						//Changes the drop down boxes index by -1
-						document.getElementById("pageOption").selectedIndex -=1;
+					//Changes the drop down boxes index by -1
+					document.getElementById("pageOption").selectedIndex -=1;
 
-						//multiple declarations of var image was neccessary as it stores the current image only, otherwise the browser console would come back with the error "image is null".
-						var image = document.getElementById("cPage");
-						image.src= pageOption.value;
-						break;
+					//multiple declarations of var image was neccessary as it stores the current image only, otherwise the browser console would come back with the error "image is null".
+					var image = document.getElementById("cPage");
+					image.src= pageOption.value;
+					break;
 				}
 			}
 
 			,true)
-
-
 
 		</script>
 
@@ -108,61 +86,50 @@
 
 		<?php include '../PHP/nav.php'; ?>
 
-				<div class="content_container">
+		<div class="content_container">
+			
 			<div id="comicDropdown"> 
-			<center>
+				<center>
+					<select id = "volumeOption" onchange = "location = this.options[this.selectedIndex].value;">
 
-		<select id = "volumeOption" onchange = "volumeChange(this.value);">
+						<option value = "" selected="">Volume/Chapter</option>
 
-			<option value = "" selected="">Volume/Chapter</option>
+						<?php Comics::vol_dropdown(); ?>	
 
-			<?php Comics::vol_dropdown(); ?>	
+					</select>
 
-		</select>
+					<select id= "pageOption" onchange="displayImage(this);" >
 
+						<option value="" selected="">Pages</option>
 
+						<?php Comics::page_dropdown(); ?>
 
-		<select id= "pageOption" onchange="displayImage(this);" >
-
-			<option value="" selected="">Pages</option>
-
-			<?php Comics::page_dropdown(); ?>
-
-		</select>
-
-
-
-		</center>
-
-
-
-		</div>
-
-
+					</select>
+				</center>
+			</div>
 
 		<div id="mWrapper">
-
 			<center>
 
-				<?php ?>
-				<img id= "cPage" src='' onclick="magnify()" >
+				<?php 
+					if(isset($_GET['vol'])){
+					Comics::validate_vol($_GET['vol']); 
+				}
+				?>
 
+				<img id= "cPage" src='' onclick="magnify()" >
 				<p>You can also use the left and right arrow keys to go back and forth between pages</p>
 
 			</center>
 
 			<div id="iModal">
-				<div id="close">&times;</div>
-
+				<div id="close">
+					&times;
+				</div>
 				
-
 				<img id="modalContent">
-
 			</div>
 	 	</div>
-
 	 </div>
-	
 	</body>
-
 </html>

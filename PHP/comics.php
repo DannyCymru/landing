@@ -48,11 +48,11 @@
         //Image creation functions
     	function first_im($filename){
 
-    		$filename=array("$filename");
+    		$filename = array("$filename");
     		$cwd = getcwd();
 
     		//For every filename in the array
-    		for ($i=0; $i < sizeOf($filename); $i++) {
+    		for ($i = 0; $i < sizeOf($filename); $i++) {
     	    
     	    	$dir = $cwd . '/' . $filename[$i] . "/";
  			
@@ -134,7 +134,7 @@
         }
 
 
-       function validate($get) {
+       function validate_comic($get) {
 
             $glob_in = Comics::glob_it(getcwd());
 
@@ -146,6 +146,10 @@
        		}
         }
 
+        function validate_vol($get){
+
+            $_SESSION['vol'] = $get;
+        }
 
         //Dropdown function for different volumes
         function vol_dropdown(){
@@ -156,7 +160,10 @@
                     
                     $volumes = str_replace($set_dir . '/', "", $filename);
 
-                    echo "<option value= '" . $filename . "'>" . $volumes . "</option> \n";
+                    //Address with volume session information
+                    $address = "reader.php?comic=" . $_SESSION['comic'] . "&vol=" . $volumes;
+
+                    echo "<option value= '" . $address . "'>" . $volumes . "</option> \n";
                 }
         }
 
@@ -172,7 +179,16 @@
                 $sans_prefix = substr($filename[$i], 29);
 
                 echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
-            }*/
+    */
+            $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_SESSION['vol'] . "/*");
+
+            for ($i=0; $i < count($pages); $i++) {
+
+                $sans_prefix = substr($pages[$i], 29);
+
+                echo "<option value= '" . $sans_prefix . "'>" . "Page:" . $i . "</option>\n";
+            }
+
         }
     }
 ?>
