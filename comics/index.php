@@ -6,7 +6,7 @@
 		</title>
 		<link rel="stylesheet" href="../CSS/nav.css">
 		<link rel="stylesheet" href="../CSS/main.css">
-		<link rel="stylesheet" href="../CSS/mangaReader.css">
+		<link rel="stylesheet" href="../CSS/reader.css">
 	</head>
 	<body>
 	
@@ -16,7 +16,7 @@
   	?>      
   	<center id= "comic_container">
   		<?php
-  			include '../PHP/comics_new.php';
+  			include '../PHP/comics.php';
 
   			Comics::comic_list();
   		?>
