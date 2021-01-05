@@ -158,12 +158,18 @@
 
                 foreach (Comics::glob_it($set_dir) as $filename) {
                     
-                    $volumes = str_replace($set_dir . '/', "", $filename);
+                    $volume = str_replace($set_dir . '/', "", $filename);
 
                     //Address with volume session information
-                    $address = "reader.php?comic=" . $_SESSION['comic'] . "&vol=" . $volumes;
+                    $address = "reader.php?comic=" . $_SESSION['comic'] . "&vol=" . $volume;
 
-                    echo "<option value= '" . $address . "'>" . $volumes . "</option> \n";
+                    if (isset($_GET['vol']) && $volume == $_GET['vol']){
+                        echo "<option selected value= '" . $address . "'>" . $volume . "</option> \n";
+
+                    }
+                    else {
+                        echo "<option value= '" . $address . "'>" . $volume . "</option> \n";
+                    }
                 }
         }
 
@@ -180,7 +186,7 @@
 
                 echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
     */
-            $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_SESSION['vol'] . "/*");
+            $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_GET['vol'] . "/*");
 
             for ($i=0; $i < count($pages); $i++) {
 
@@ -188,7 +194,6 @@
 
                 echo "<option value= '" . $sans_prefix . "'>" . $i . "</option>\n";
             }
-
         }
     }
 ?>

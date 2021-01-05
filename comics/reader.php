@@ -88,7 +88,7 @@
 				<center>
 					<select id = "volumeOption" onchange = "location = this.options[this.selectedIndex].value;">
 
-						<option value = "" selected="">Volume/Chapter</option>
+						<option value = "">Volume/Chapter</option>
 
 						<?php Comics::vol_dropdown(); ?>	
 
