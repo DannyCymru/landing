@@ -17,10 +17,6 @@
 		<link rel="stylesheet" type="text/css" href="../../CSS/nav.css">
 
 		<script type="text/javascript">
-			
-			function volumeChange(volume){
-
-			}
 
 			//Function that changes the image based on the element of the dropdown options 
 			function displayImage(elem) {
@@ -108,16 +104,16 @@
 				</center>
 			</div>
 
-		<div id="mWrapper">
+		<div id="mWrapper" onclick="magnify()">
 			<center>
 
-				<?php 
-					if(isset($_GET['vol'])){
+				<?php
+					if(isset($_GET['vol']) && !empty($_GET['vol'])){
 					Comics::validate_vol($_GET['vol']); 
-				}
+					}
 				?>
 
-				<img id= "cPage" src='' onclick="magnify()" >
+				<img id= "cPage" src='' >
 				<p>You can also use the left and right arrow keys to go back and forth between pages</p>
 
 

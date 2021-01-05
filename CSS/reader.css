@@ -15,6 +15,7 @@
   height: 100%; /* Full height */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  overflow: auto;
 }
 
 /* Modal Content/Box */
@@ -60,8 +61,8 @@
 .comic{
 	display: inline-block;
 	max-width: 70%;
-  	margin-top: 2.5%;
-  	font-family: 'Muli', Arial, Helvetica, san-serif;
+  margin-top: 2.5%;
+  font-family: 'Muli', Arial, Helvetica, san-serif;
 
 }
 
