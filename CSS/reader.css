@@ -58,6 +58,10 @@
 	display: block;
 }
 
+#mWrapper {
+  color: white;
+}
+
 .comic{
 	display: inline-block;
 	max-width: 70%;
