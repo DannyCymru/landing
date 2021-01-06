@@ -38,7 +38,7 @@
         		}
 
         		else {
-        			echo "<div class='comic'>" . "<a href='" . 'reader.php?comic=' . $filename . "'>";
+        			echo "<div class='comic'>" . "<a href='" . 'reader.php?comic=' . $filename . "&vol='>";
         			echo "<img src='../comics/comic_image/" . $filename . ".webp'/>";
             		echo "<br>" . $upper_case . "</a>"  . "</div>\r\n";
         		}
@@ -173,14 +173,16 @@
         function page_dropdown(){            
             $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_GET['vol'] . "/*.{jpg,jpeg,png,webp}", GLOB_BRACE);
 
-            for ($i=1; $i < count($pages); $i++) {
+            $_SESSION['page'] = substr($pages[0],29);
+
+            for ($i=0; $i < count($pages); $i++) {
 
                 //Removes unix prefix
                 $sans_prefix = substr($pages[$i], 29);
 
                 //If the volume is set then it sets the current page to the first page.
-                if ($i == 1 && isset($_GET['vol'])) {
-                    echo "<option selected value= '" . $sans_prefix . "'>" . $i . "</option>\n";
+                if ($i == 0 && isset($_GET['vol'])) {
+                    echo "<option selected value= '" . $sans_prefix . "'>" . $i+1 . "</option>\n";
 
                 }
                 else {

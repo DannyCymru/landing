@@ -20,14 +20,12 @@
 
 			//Function that changes the image based on the element of the dropdown options 
 			function displayImage(elem) {
-
 				var image = document.getElementById("cPage");
 				image.src = elem.value;
 			}
 
 			//Creates a modal of the image to allow a magnified view of the comic
 			function magnify() {
-
 				var modal = document.getElementById("iModal");
 				var img = document.getElementById("cPage");
 				var modalImg = document.getElementById("modalContent");
@@ -96,7 +94,7 @@
 
 					<select id= "pageOption" onchange="displayImage(this);" >
 
-						<option value="" selected="">Pages</option>
+						<option value="">Page</option>
 
 						<?php Comics::page_dropdown(); ?>
 
@@ -108,12 +106,10 @@
 			<center>
 
 				<?php
-					if(isset($_GET['vol']) && !empty($_GET['vol'])){
-					Comics::validate_vol($_GET['vol']); 
+					if (isset($_GET['vol']) && !empty($_GET['vol'])) {
+						echo "<img src='". $_SESSION['page'] . "' id='cPage'>";
 					}
 				?>
-
-				<img id= "cPage" src='' >
 				<p>You can also use the left and right arrow keys to go back and forth between pages</p>
 
 
