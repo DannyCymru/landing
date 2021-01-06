@@ -65,7 +65,7 @@
  				}
 
  				//Recursively scans the very first volume for each comic and removes unnecessary results
- 				$scanned_dir = array_diff(scandir($first_dir[0]), array('..', '.', 'index.php'));
+ 				$scanned_dir = scandir($first_dir[0]);
 
  				//Returns the full path to the first image found (array elements 0 and 1 of scanned_dir are the '..' files)
  				$full_path = $all_dirs[0] . '/' . $scanned_dir[2];
@@ -146,15 +146,11 @@
        		}
         }
 
-        function validate_vol($get){
-
-            $_SESSION['vol'] = $get;
-        }
-
         //Dropdown function for different volumes
         function vol_dropdown(){
-                //Sets comic directory with the session info            
-                $set_dir = '../comics/' . $_SESSION['comic'];
+            
+            //Sets comic directory with the session info            
+            $set_dir = '../comics/' . $_SESSION['comic'];
 
                 foreach (Comics::glob_it($set_dir) as $filename) {
                     
@@ -163,6 +159,7 @@
                     //Address with volume session information
                     $address = "reader.php?comic=" . $_SESSION['comic'] . "&vol=" . $volume;
 
+                    //Sets the selected value to the user selected volume
                     if (isset($_GET['vol']) && $volume == $_GET['vol']){
                         echo "<option selected value= '" . $address . "'>" . $volume . "</option> \n";
 
@@ -173,26 +170,22 @@
                 }
         }
 
-        function page_dropdown(){
-          /*  //Grabs the current directory where the php function was called from
-            $set_dir = '../comics/' . $_SESSION['comic'] . '/' . $_SESSION['volume'];
+        function page_dropdown(){            
+            $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_GET['vol'] . "/*.{jpg,jpeg,png,webp}", GLOB_BRACE);
 
-            $filename = glob($cwd . "/*{.webp, jpg, jpeg, png}", GLOB_BRACE);
+            for ($i=1; $i < count($pages); $i++) {
 
-            for ($i=0; $i < sizeof($filename); $i++) {
-
-                //Removes the unix path variables
-                $sans_prefix = substr($filename[$i], 29);
-
-                echo "<option value= " . $sans_prefix . ">" . "Page:" . $i . "</option>\n";
-    */
-            $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_GET['vol'] . "/*");
-
-            for ($i=0; $i < count($pages); $i++) {
-
+                //Removes unix prefix
                 $sans_prefix = substr($pages[$i], 29);
 
-                echo "<option value= '" . $sans_prefix . "'>" . $i . "</option>\n";
+                //If the volume is set then it sets the current page to the first page.
+                if ($i == 1 && isset($_GET['vol'])) {
+                    echo "<option selected value= '" . $sans_prefix . "'>" . $i . "</option>\n";
+
+                }
+                else {
+                    echo "<option value= '" . $sans_prefix . "'>" . $i . "</option>\n";
+                }
             }
         }
     }
