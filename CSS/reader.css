@@ -65,14 +65,13 @@
 .comic{
 	display: inline-block;
 	max-width: 70%;
-  margin-top: 2.5%;
-  font-family: 'Muli', Arial, Helvetica, san-serif;
+  	margin-top: 2.5%;
+  	font-family: 'Muli', Arial, Helvetica, san-serif;
 
 }
 
 .comic img{
-	margin-right: 20%;
-	padding-right:30px;
+	padding-right:20px;
 
 }
 
