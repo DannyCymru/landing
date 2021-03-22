@@ -10,39 +10,38 @@
 
   <!-- Inline CSS to simply incorporate PHP to change the background image-->
   <style type="text/css">
-  	html {height:100%;background-image: url(<?php include 'PHP/wallpaper.php'; rando_image();?>); background-position: center; background-size: 100% 100%;background-repeat: no-repeat;}
-  	nav {background-color:unset;}
+  	html {height:100%;background-color:#2f3640;}
   </style>
   <script type="text/javascript">
 
     //Changes the styling so that we have an effective burger menu drop down.
-    function brgr(){
-    	var x = document.getElementById("brgr_links");
-    	if (x.style.display === "block"){
-    		x.style.display = "none";
-    	} else {
-    		x.style.display = "block";
-    	}
-    }
+    //function brgr(){
+    //	var x = document.getElementById("brgr_links");
+    //	if (x.style.display === "block"){
+    //		x.style.display = "none";
+    //	} else {
+    //		x.style.display = "block";
+    //	}
+    //}
 
     //Ajax request that sends the id and current wall paper to a php function
     //that deletes it then reloads the page to show a new image.
-    function rm_paper(){
-      var wallpaper = $("html").css("background-image");
-      $.ajax({ url: 'PHP/wallpaper.php',
-               type: 'POST',
-               data: {"id": 'rm', "paper": wallpaper},
-               success: function(data){  
-                  location.reload();
-               }
-      })
-    }
+    //function rm_paper(){
+      //var wallpaper = $("html").css("background-image");
+      //$.ajax({ url: 'PHP/wallpaper.php',
+        //       type: 'POST',
+          //     data: {"id": 'rm', "paper": wallpaper},
+            //   success: function(data){  
+              //    location.reload();
+               //}
+      //})
+    //}
 
     //Reloads page to get a new wallpaper, 
     //if I just happen to want to see a different one but not delete.
-    function next_paper(){
-      location.reload();
-    }
+    //function next_paper(){
+      //location.reload();
+    //}
 
   </script>
 
@@ -54,7 +53,7 @@
     include 'PHP/nav.php';
   ?>      
 
-  <!--Burger menu links -->
+  <!--Burger menu links
   <div id="brgr_container">
     <a href="javascript:void(0);" class="icon" onclick="brgr()">
         <i class="fa fa-bars"></i>
@@ -65,13 +64,13 @@
       <br>
 		  <a href="#" onclick="rm_paper()">Remove image</a>
     </div>
-  </div>
+  </div>-->
 
 
 	<div id=search_container>
 		<div id=search_form>
-			<form id="google_search" action="https://google.com/search" method="get">
-				<input id="search_bar" type="text" name="q" placeholder="www.reddit.com">
+			<form id="search" action="https://duckduckgo.com/?q=" method="get">
+				<input id="search_bar" type="text" name="q" placeholder="duckduckgo.com" autofocus>
 				<input id="enter_button" type="submit" value="SEARCH">
 			</form>	
 		</div>
