@@ -23,14 +23,14 @@ otherwise the whole thing is completely transparent
 	margin: auto;
 }
 
-/*
+
 #trans_box{
 	height: 100%;
 	width:  100%;
 	background-color: #2f3640;
 	opacity: 0.3;
 	z-index: 1;
-}*/
+}
 
 /* Search input */
 #search_bar {
@@ -38,6 +38,7 @@ otherwise the whole thing is completely transparent
 	color: #2f3640;
 	border-width: 0;
 	background-color:white;
+	height: 100%;
 }
 
 
@@ -51,19 +52,14 @@ input[type = "text"] {
 /*CSS for the enter button */
 #enter_button {
 	position: absolute;
-	height: 42px;
 	width: 80px;
 	font-size: 16px;
 	color: #2f3640;
 	text-align: center;
-	line-height: 42px;
 	border-width: 0;
 	margin-bottom: 2px;
 	padding-right: 10px;
-
-	-webkit-border-radius: 0px 0px 0px 0px;
-	-moz-border-radius: 0px 0px 0px 0px;
-	border-radius: 0px 0px 0px 0px;
+	height: 100%;
 }
 
 #enter_button:hover {
