@@ -8,4 +8,5 @@
 ./comics/*.jpeg
 ./comics/*.jpg
 ./comics/*.webp
+./comics/*
 ./gifs/*.gif
