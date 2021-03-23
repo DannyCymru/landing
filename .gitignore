@@ -2,6 +2,8 @@ wallpapers/*.png
 wallpapers/*.jpg
 wallpapers/*.jpeg
 wallpapers/*.webp
+wallpaper/*
+videos/*
 videos/*.mkv
 videos/*.mp4
 comics/*.png
