@@ -7,12 +7,12 @@
 
         /*I use a lot of basic globs to get basic directory information
         this function allows me to not repeat myself so much*/
-        function glob_it($cwd) {
+        static function glob_it($cwd) {
             $glob_in = glob($cwd . '/*' , GLOB_ONLYDIR);
             return $glob_in;
         }
 
-    	function comic_list(){
+    	static function comic_list(){
 
     		$cwd = getcwd();
     		
@@ -31,10 +31,11 @@
             	$comic = preg_replace("(_)", " ", $filename);
 
             	$upper_case = ucwords($comic);
-
+		
+		$obj = new Comics();
             	//checks if a thumbnail doesn't alaready exist. If it doesn't it runs functions to appropriately create one
             	if(!file_exists("../comics/comic_image/" . $filename . ".webp")) {
-               		Comics::im_cr($filename, Comics::first_im($filename));
+               		$obj->im_cr($filename, Comics::first_im($filename));
         		}
 
         		else {
@@ -46,7 +47,7 @@
     	}
 
         //Image creation functions
-    	function first_im($filename){
+    	static function first_im($filename){
 
     		$filename = array("$filename");
     		$cwd = getcwd();
@@ -74,13 +75,13 @@
     	}
 
     	//Basic image creation function with GD
-    	function im_cr($filename, $image){
-    		$file_info = pathinfo($image);
-    		$dir_im;
+    	 function im_cr($filename, $image){
+    		$file_info = pathinfo($image, PATHINFO_EXTENSION);
+    		$dir_im = 'null';
     		ob_start();
-
+		
             //Checks file extension to decide which imagecreate function is required
-    		switch ($file_info['extension']) {
+           switch ($file_info) {
     			case 'webp':
     				$dir_im = imagecreatefromwebp($image);
     				break;
@@ -97,8 +98,8 @@
     				echo "error";
     				break;
     		}
-        	
-        	$manipulated=Comics::im_man($image, $dir_im);
+        	$obj= new Comics();
+        	$manipulated=$obj->im_man($image, $dir_im);
 
         	//Creates a webp image from provided resource
         	imagewebp($manipulated,  "../comics/comic_image/" . $filename .".webp", 100);
@@ -134,7 +135,7 @@
         }
 
 
-       function validate_comic($get) {
+       static function validate_comic($get) {
 
             $glob_in = Comics::glob_it(getcwd());
 
@@ -147,7 +148,7 @@
         }
 
         //Dropdown function for different volumes
-        function vol_dropdown(){
+        static function vol_dropdown(){
             
             //Sets comic directory with the session info            
             $set_dir = '../comics/' . $_SESSION['comic'];
@@ -170,7 +171,7 @@
                 }
         }
 
-        function page_dropdown(){            
+        static function page_dropdown(){            
             $pages = glob(getcwd() . "/" . $_SESSION['comic'] . '/' . $_GET['vol'] . "/*.{jpg,jpeg,png,webp}", GLOB_BRACE);
 
             $_SESSION['page'] = substr($pages[0],29);
